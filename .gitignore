@@ -13,3 +13,5 @@ ParcelLED/obj/Debug/ParcelLED.Properties.Resources.resources
 .vs/ParcelLED/v16/Server/sqlite3/storage.ide
 .vs/ParcelLED/v16/Server/sqlite3/storage.ide-shm
 .vs/ParcelLED/v16/Server/sqlite3/storage.ide-wal
+ParcelLED/bin/Debug/ParcelLED.exe
+ParcelLED/bin/Debug/ParcelLED.pdb

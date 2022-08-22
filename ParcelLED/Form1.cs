@@ -33,9 +33,13 @@ namespace ParcelLED
 
             timer2.Start();
 
-            this.Location = Properties.Settings.Default.Location;
-
+            //this.Location = Properties.Settings.Default.Location;
+            this.Location = new Point(283, 164);
+            Properties.Settings.Default.Location = this.Location;
+            Properties.Settings.Default.Save();
             tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+
+            //tbWinXY.Text = this.Location.X + "," + this.Location.Y;
 
             this.BringToFront();
             this.Focus();
@@ -47,8 +51,20 @@ namespace ParcelLED
             //textBox1.Text = "택배도착날짜\r\n12월31일\r\n화요일";
 
             textBox1.Font = new Font(textBox1.Font.FontFamily, 8);
-            textBox1.Text = "남은\r\n보관시간\r\n23:30";
-            textBox1.ForeColor = Color.Orange;
+            textBox1.Text = "도착날짜\r\n07월 04일\r\n수요일";
+            textBox1.ForeColor = Color.White;
+
+            textBox2.Font = new Font(textBox2.Font.FontFamily, 8);
+            textBox2.Text = "남은\r\n보관시간\r\n23:30";
+            textBox2.ForeColor = Color.Orange;
+
+            textBox3.Font = new Font(textBox3.Font.FontFamily, 8);
+            textBox3.Text = "도착날짜\r\n07월 04일\r\n수요일";
+            textBox3.ForeColor = Color.White;
+
+            textBox4.Font = new Font(textBox4.Font.FontFamily, 8);
+            textBox4.Text = "남은\r\n보관시간\r\n23:30";
+            textBox4.ForeColor = Color.White;
 
         }
 
@@ -161,16 +177,57 @@ namespace ParcelLED
         public string mode = "Left-to-Right";
 
 
-
-
         private void timer2_Tick(object sender, EventArgs e)
         {
-            if (stream == null) return;
-            //NetworkStream stream = tc.GetStream();
-            Byte[] sendbuf = new byte[] { 0, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 0x0a };
-            stream.Write(sendbuf, 0, sendbuf.Length);
+            if (stream == null) { }
+            else
+            {
+                //NetworkStream stream = tc.GetStream();
+                Byte [] sendbuf = new byte[] { 0, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 0x0a };
+                stream.Write(sendbuf, 0, sendbuf.Length);
 
-            Console.WriteLine("송신: {0}", sendbuf);
+                Console.WriteLine("송신: {0}", sendbuf);
+
+
+            }
+
+            // For Test
+            DateTime nowDate = DateTime.Now;
+            String strDayOfWeek = "월요일";
+            if (nowDate.DayOfWeek == DayOfWeek.Monday)
+                strDayOfWeek = "월요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Tuesday)
+                strDayOfWeek = "화요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Wednesday)
+                strDayOfWeek = "수요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Thursday)
+                strDayOfWeek = "목요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Friday)
+                strDayOfWeek = "금요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Saturday)
+                strDayOfWeek = "토요일";
+            else if (nowDate.DayOfWeek == DayOfWeek.Sunday)
+                strDayOfWeek = "일요일";
+
+
+            //textBox1.Text = "도착날짜\r\n07월 04일\r\n수요일";
+            textBox1.Text = DateTime.Now.ToString("도착날짜\r\nMM월 dd일\r\n" + strDayOfWeek);
+            textBox1.ForeColor = Color.White;
+
+            //textBox1.Text = "도착날짜\r\n07월 04일\r\n수요일";
+            textBox3.Text = DateTime.Now.ToString("도착날짜\r\nMM월 dd일\r\n" + strDayOfWeek);
+            textBox3.ForeColor = Color.Red;
+
+
+            //textBox2.Font = new Font(textBox2.Font.FontFamily, 8);
+            textBox2.Text = DateTime.Now.ToString("남은\r\n보관시간\r\nhh:mm");
+            textBox2.ForeColor = Color.Orange;
+
+
+            //textBox4.Font = new Font(textBox4.Font.FontFamily, 8);
+            textBox4.Text = DateTime.Now.ToString("남은\r\n보관시간\r\nhh:mm");
+            textBox4.ForeColor = Color.White;
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -182,37 +239,37 @@ namespace ParcelLED
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Left)
-            {
-                this.Location = new Point(this.Location.X - 1, this.Location.Y);
-                Properties.Settings.Default.Location = this.Location;
-                Properties.Settings.Default.Save();
-                tbWinXY.Text = this.Location.X + "," + this.Location.Y;
-            }
-            else if (e.KeyCode == Keys.Right)
-            {
-                this.Location = new Point(this.Location.X + 1, this.Location.Y);
-                Properties.Settings.Default.Location = this.Location;
-                Properties.Settings.Default.Save();
-                tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+            //if(e.KeyCode == Keys.Left)
+            //{
+            //    this.Location = new Point(this.Location.X - 1, this.Location.Y);
+            //    Properties.Settings.Default.Location = this.Location;
+            //    Properties.Settings.Default.Save();
+            //    tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+            //}
+            //else if (e.KeyCode == Keys.Right)
+            //{
+            //    this.Location = new Point(this.Location.X + 1, this.Location.Y);
+            //    Properties.Settings.Default.Location = this.Location;
+            //    Properties.Settings.Default.Save();
+            //    tbWinXY.Text = this.Location.X + "," + this.Location.Y;
 
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                this.Location = new Point(this.Location.X, this.Location.Y-1);
-                Properties.Settings.Default.Location = this.Location;
-                Properties.Settings.Default.Save();
-                tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+            //}
+            //else if (e.KeyCode == Keys.Up)
+            //{
+            //    this.Location = new Point(this.Location.X, this.Location.Y-1);
+            //    Properties.Settings.Default.Location = this.Location;
+            //    Properties.Settings.Default.Save();
+            //    tbWinXY.Text = this.Location.X + "," + this.Location.Y;
 
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                this.Location = new Point(this.Location.X, this.Location.Y + 1);
-                Properties.Settings.Default.Location = this.Location;
-                Properties.Settings.Default.Save();
-                tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+            //}
+            //else if (e.KeyCode == Keys.Down)
+            //{
+            //    this.Location = new Point(this.Location.X, this.Location.Y + 1);
+            //    Properties.Settings.Default.Location = this.Location;
+            //    Properties.Settings.Default.Save();
+            //    tbWinXY.Text = this.Location.X + "," + this.Location.Y;
 
-            }
+            //}
 
 
         }
@@ -224,10 +281,10 @@ namespace ParcelLED
 
         private void Form1_MouseLeave(object sender, EventArgs e)
         {
-            this.Location = new Point(this.Location.X, this.Location.Y + 1);
-            Properties.Settings.Default.Location = this.Location;
-            Properties.Settings.Default.Save();
-            tbWinXY.Text = this.Location.X + "," + this.Location.Y;
+            //this.Location = new Point(this.Location.X, this.Location.Y + 1);
+            //Properties.Settings.Default.Location = this.Location;
+            //Properties.Settings.Default.Save();
+            //tbWinXY.Text = this.Location.X + "," + this.Location.Y;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
